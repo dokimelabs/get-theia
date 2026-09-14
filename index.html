@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>get theia — Aletheia</title>
+<style>
+  /* The single styling hook for this landing page, and the SOURCE OF TRUTH
+     for the Aletheia design tokens as they are used on the web.
+     The style of record is the TAS deck:
+       ~/work/scratchpad/tmp/tas-deck/presentation/theia-tas-deck.orig.html
+     — token names and values below are lifted from it verbatim, and the
+     component vocabulary (kicker, chip, card-on-paper, hairline rule,
+     dark command frame) follows it.
+
+     The documentation under docs/ and reference/ is rendered by Diplodoc;
+     its custom CSS duplicates these values because a Diplodoc page cannot
+     import from here. Each copy carries a header pointing back at this
+     block:
+       docs/sources/0.2.201/_assets/theia.css   — user guide (ru, en)
+       docs/sources/reference/_assets/theia.css — platform reference
+
+     Palette: hue is the meaning family, shade is the value. Desaturated
+     and deepened — no flat saturated primaries, no decorative colour.
+     Every colour below carries a named semantic. */
+  :root{
+    --paper:#f5f7fb;        /* page ground — cool blue-gray */
+    --panel:#e7ebf4;        /* recessed strips, table heads */
+    --card:#fbfcfe;         /* raised surface on paper */
+    --ink:#1b1f26;          /* text and structure */
+    --slate:#65707e;        /* neutral, secondary text */
+    --slate-deep:#5d6773;   /* same neutral at label value: AA on --panel */
+    --line:#d5dbe6;         /* hairline rules */
+
+    --denim:#3a5683;        /* platform mechanisms, accents, links */
+    --denim-soft:#e5ebf4;
+    --pine:#0e6245;         /* verified, supported, positive */
+    --pine-soft:#e1efe8;
+    --crimson:#8c2f39;      /* failure, unsupported — sparingly */
+    --crimson-soft:#f5e6e8;
+    --violet:#5b4b8a;       /* forward-looking, arriving, highlight */
+    --violet-soft:#e9e6f3;
+
+    --mono:'JetBrains Mono','SF Mono',Consolas,'Cascadia Mono',monospace;
+    --sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --r:14px;
+    /* one elevation ramp — panels barely lift, dark frames lift most */
+    --lift-1:0 1px 1px rgba(28,38,58,.03), 0 10px 26px -20px rgba(28,38,58,.30);
+    --lift-dark:0 18px 44px -24px rgba(24,30,44,.55);
+
+    color-scheme:light;
+  }
+
+  *{box-sizing:border-box}
+
+  /* The single accent gradient, in deck hues, as a hairline. It is the
+     only gradient here and it repeats on the documentation masthead. */
+  body::before{
+    content:"";position:fixed;inset:0 0 auto 0;height:3px;z-index:2;
+    background:linear-gradient(90deg,var(--denim) 0%,var(--pine) 52%,var(--violet) 100%);
+  }
+
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font:400 17px/1.6 var(--sans);
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    font-kerning:normal;text-rendering:optimizeLegibility;
+    max-width:50rem;margin:0 auto;padding:clamp(3.25rem,8vh,5.5rem) 1.75rem 4rem;
+  }
+
+  /* Wordmark: the deck's pairing — tight sans name, mono tag beside it. */
+  h1{
+    font:750 clamp(2.1rem,6.2vw,3rem)/1.04 var(--sans);
+    letter-spacing:-.028em;margin:0 0 1.5rem;color:var(--ink);
+  }
+  h1 .mark-sub{
+    font:650 .30em/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--denim);vertical-align:.5em;margin-left:.5em;
+  }
+
+  .lede{font-size:1.17rem;line-height:1.5;color:var(--slate);max-width:62ch;margin:0 0 .5rem}
+  .lede b{color:var(--ink);font-weight:650}
+
+  /* Section labels are the deck's kicker. */
+  h2{
+    font:600 13px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+    color:var(--denim);
+    margin:3.25rem 0 1.15rem;padding-top:1.6rem;border-top:1px solid var(--line);
+  }
+
+  p,li{color:var(--slate);margin:0 0 1rem}
+  p strong{color:var(--ink);font-weight:650}
+
+  a{color:var(--denim);text-decoration:underline;
+    text-underline-offset:.18em;text-decoration-thickness:1px;
+    text-decoration-color:#3a568359;transition:color .15s,text-decoration-color .15s}
+  a:hover{color:var(--pine);text-decoration-color:currentColor}
+
+  /* A command you run: the deck's dark command frame, identical for every
+     command on the page — position and prose carry the hierarchy. */
+  pre{
+    background:#171a21;color:#9fd3b6;border:1px solid #10131a;border-radius:12px;
+    font:600 13.5px/1.5 var(--mono);
+    margin:0 0 1rem;padding:14px 18px;overflow-x:auto;box-shadow:var(--lift-1);
+  }
+
+  /* A token you read, not run: a chip on paper. */
+  code{
+    background:var(--card);color:var(--ink);border:1px solid var(--line);
+    font:500 .84em/1.4 var(--mono);padding:.14em .4em;border-radius:6px;
+  }
+  pre code{background:none;border:0;padding:0;color:inherit;font-size:1em;font-weight:inherit}
+
+  /* Platform matrix: a card on paper, panel head, hairline rows. */
+  table{
+    width:100%;border-collapse:separate;border-spacing:0;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    box-shadow:var(--lift-1);margin:0 0 1rem;font-size:.95rem;
+  }
+  th,td{padding:13px 16px;border-bottom:1px solid var(--line);text-align:left;
+    vertical-align:top;line-height:1.45;color:var(--ink)}
+  tr:last-child td{border-bottom:none}
+  /* Deck uses --slate here; on --panel that is 4.2:1, short of AA for
+     12.5px uppercase, so the same neutral is taken one shade deeper. */
+  th{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-deep);
+    background:var(--panel);padding-top:11px;padding-bottom:11px;font-weight:600}
+  td:first-child{font-weight:650;white-space:nowrap}
+  td:nth-child(2){color:var(--slate);white-space:nowrap;font:500 .92em/1.45 var(--mono)}
+  td:nth-child(3){color:var(--slate)}
+
+  /* Status is a chip: pine verified, crimson not supported, violet arriving. */
+  .chip{
+    display:inline-block;font:600 12.5px/1 var(--mono);padding:7px 12px;border-radius:999px;
+    border:1px solid var(--line);background:var(--card);color:var(--ink);white-space:nowrap;
+  }
+  .chip.pine{background:var(--pine-soft);border-color:#bad6c9;color:var(--pine)}
+  .chip.crimson{background:var(--crimson-soft);border-color:#e2c2c6;color:var(--crimson)}
+  .chip.violet{background:var(--violet-soft);border-color:#cdc5e2;color:var(--violet)}
+  .soon .chip{margin:0 .15em .35em 0}
+
+  /* Masthead: wordmark left, documentation entry points right. */
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;
+    gap:1.25rem 1.75rem;flex-wrap:wrap;margin-bottom:1.5rem}
+  .masthead h1{margin:0}
+  .nav{display:flex;gap:.5rem;flex-wrap:wrap;padding-top:.7rem}
+  .btn{
+    display:inline-block;font:600 12.5px/1 var(--mono);letter-spacing:.08em;
+    text-transform:uppercase;padding:11px 16px;border-radius:10px;
+    border:1px solid var(--line);background:var(--card);color:var(--ink);
+    text-decoration:none;white-space:nowrap;
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  .btn:hover{background:var(--panel);border-color:#c4ccdb;color:var(--ink)}
+  .btn.primary{background:var(--denim);border-color:var(--denim);color:#fbfcfe}
+  .btn.primary:hover{background:#32496f;border-color:#32496f;color:#fbfcfe}
+
+  /* OS selector. The tablist is hidden in the markup and revealed by the
+     inline script; with JS off both panels stay visible and labelled, so
+     every instruction is reachable without scripting. */
+  [hidden]{display:none!important}
+  .tabs{display:flex;gap:6px;margin:0 0 1.1rem}
+  .tab{
+    font:600 12.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+    padding:11px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--slate);cursor:pointer;white-space:nowrap;
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  .tab:hover{background:var(--panel);color:var(--ink)}
+  .tab[aria-selected="true"]{background:var(--denim-soft);border-color:#c4d1e2;color:var(--denim)}
+  .tab:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+  .panel-label{
+    font:600 13px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+    color:var(--slate);margin:0 0 .9rem;
+  }
+  .panel+.panel{border-top:1px solid var(--line);margin-top:1.9rem;padding-top:1.5rem}
+  .os.js .panel-label{display:none}
+  .os.js .panel+.panel{border-top:0;margin-top:0;padding-top:0}
+  .step{color:var(--slate);margin:0 0 .55rem}
+  .step b{color:var(--ink);font-weight:650}
+
+  ul{margin:0 0 1rem;padding-left:1.15rem}
+  li{margin-bottom:.6rem}
+  li::marker{color:var(--denim)}
+  #docs-version{color:var(--slate);font:500 .88em var(--mono)}
+
+  .foot{
+    margin-top:3.5rem;padding-top:1.4rem;border-top:1px solid var(--line);
+    font:500 13px var(--mono);letter-spacing:.04em;color:var(--slate);
+  }
+
+  /* Phone: single column, the matrix collapses to stacked records inside
+     the same card. Only the command frame keeps a horizontal scroll. */
+  @media (max-width:620px){
+    body{font-size:16px;padding:2.75rem 1.15rem 3rem}
+    h1{letter-spacing:-.02em}
+    table{display:block;padding:.35rem .25rem}
+    tbody,tr,td{display:block;width:100%}
+    thead,tr:first-child{position:absolute;left:-9999px}
+    tr{border-bottom:1px solid var(--line);padding:.85rem 1rem}
+    tr:last-child{border-bottom:none}
+    td{border:0;padding:.14rem 0;white-space:normal}
+    td:first-child{white-space:normal;font-size:1.05rem;letter-spacing:-.014em}
+    td:nth-child(2){white-space:normal;font-size:.84rem;margin-bottom:.5rem}
+    td:nth-child(2)::before{content:"arch · ";color:var(--slate)}
+    td:nth-child(3){font-size:.92rem}
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <h1>Aletheia <span class="mark-sub">· theia</span></h1>
+  <nav class="nav" aria-label="Documentation">
+    <a class="btn primary" href="docs/en/">Documentation</a>
+    <a class="btn" href="reference/">Reference</a>
+  </nav>
+</header>
+<p class="lede">Codebase understanding, orchestrated agent runs, temporal memory, and a
+replayable audit trail — one local-first platform under your existing
+coding agents.</p>
+
+<h2>Install</h2>
+<div class="os" id="os">
+<div class="tabs" id="ostabs" role="tablist" aria-label="Operating system" hidden>
+  <button type="button" class="tab" role="tab" data-os="unix"
+    id="tab-unix" aria-controls="panel-unix" aria-selected="true">Linux / macOS</button>
+  <button type="button" class="tab" role="tab" data-os="win"
+    id="tab-win" aria-controls="panel-win" aria-selected="false">Windows</button>
+</div>
+
+<section class="panel" id="panel-unix" role="tabpanel" aria-labelledby="tab-unix" data-os="unix">
+<h3 class="panel-label">Linux / macOS</h3>
+<pre>curl -fsSL https://dokimelabs.github.io/get-theia/install.sh | sh</pre>
+<p>The installer detects your OS and architecture, asks for the GitHub PAT
+your organization issued for release access (or reads
+<code>$THEIA_PAT</code>), verifies checksums, verifies the binary runs, and
+installs <code>theia</code> to <code>~/.local/bin</code>. Re-running it
+replaces an existing install wholesale — it is also the recovery lever.</p>
+<p>To pin an exact release instead of the latest:</p>
+<pre>curl -fsSL https://dokimelabs.github.io/get-theia/install.sh | THEIA_VERSION=0.2.201 sh</pre>
+</section>
+
+<section class="panel" id="panel-win" role="tabpanel" aria-labelledby="tab-win" data-os="win">
+<h3 class="panel-label">Windows</h3>
+<!-- ┌──────────────────────────────────────────────────────────────────┐
+     │ SLOT: Windows installer kit                                      │
+     └──────────────────────────────────────────────────────────────────┘
+     Steps 2-4 are owned by distribution/windows/install.ps1 and do not
+     change: it copies the app into %LOCALAPPDATA%\dokimelabs\theia\app,
+     adds that to the USER PATH, reads PAT.txt beside itself, and ends on
+     `theia doctor`. Re-running it is safe.
+
+     Step 1 is the only part that moves. It resolves the kit by matching
+     the release's Windows asset, because the kit has no published URL
+     pattern yet. When the release agent publishes one, replace ONLY the
+     line marked "URL LINE" below with the direct form, e.g.
+
+       Invoke-WebRequest "<published pattern>" -Headers $hb -OutFile $zip
+
+     and leave every other line of every step alone. -->
+<p>Windows runtime support has landed and the release carries an installer
+kit. <code>theia-releases</code> is private, so downloading it needs the
+fine-grained GitHub token your organization was issued — the same token
+the Linux and macOS installer asks for. Run these in PowerShell; the
+installer itself needs no administrator rights.</p>
+<p class="step"><b>1.</b> Put your access token in the session, then
+download the Windows kit for the latest release:</p>
+<pre>$env:THEIA_PAT = "github_pat_&hellip;"
+$hj = @{ Authorization = "Bearer $env:THEIA_PAT"; Accept = "application/vnd.github+json" }
+$hb = @{ Authorization = "Bearer $env:THEIA_PAT"; Accept = "application/octet-stream" }
+$api = "https://api.github.com/repos/dokimelabs/theia-releases"
+$rel = Invoke-RestMethod "$api/releases/latest" -Headers $hj
+$arch = if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") { "aarch64" } else { "x86_64" }
+# URL LINE
+$asset = $rel.assets | Where-Object { $_.name -like "*windows-$arch*" } | Select-Object -First 1
+if (-not $asset) { throw "release $($rel.tag_name) carries no Windows kit" }
+Invoke-WebRequest $asset.url -Headers $hb -OutFile "$env:TEMP\$($asset.name)"</pre>
+<p class="step"><b>2.</b> Unpack it and step into the folder holding
+<code>install.ps1</code>:</p>
+<pre>$kit = "$env:TEMP\theia-kit"
+New-Item -ItemType Directory -Force -Path $kit | Out-Null
+tar -xf "$env:TEMP\$($asset.name)" -C $kit
+Set-Location (Get-ChildItem $kit -Recurse -Filter install.ps1 | Select-Object -First 1).Directory</pre>
+<p class="step"><b>3.</b> <i>Optional</i> — drop your token into
+<code>PAT.txt</code> beside the installer so it can configure updates for
+you. Skip this and set it later with
+<code>theia setup --pat &lt;token&gt;</code>:</p>
+<pre>$env:THEIA_PAT | Set-Content -Encoding ascii PAT.txt</pre>
+<p class="step"><b>4.</b> Run the installer:</p>
+<pre>powershell -ExecutionPolicy Bypass -File .\install.ps1</pre>
+<p>It installs into <code>%LOCALAPPDATA%\dokimelabs\theia\app</code> for
+your user only, adds that folder to your <code>PATH</code>, and finishes
+by printing <code>theia doctor</code>. Re-running it is safe — it
+reinstalls over the top and leaves your config alone. Then open a
+<b>new</b> terminal, where <code>theia</code> is on the path.</p>
+</section>
+</div>
+
+<h2>Platforms</h2>
+<table>
+<tr><th>Platform</th><th>Architecture</th><th>Status</th></tr>
+<tr><td>Linux</td><td>x86_64</td><td><span class="chip pine">supported</span></td></tr>
+<tr><td>Linux</td><td>aarch64</td><td><span class="chip pine">supported</span></td></tr>
+<tr><td>macOS</td><td>Apple silicon</td><td><span class="chip pine">supported</span></td></tr>
+<tr><td>macOS</td><td>Intel</td><td><span class="chip crimson">not supported</span></td></tr>
+<tr><td>Windows</td><td>x86_64 / aarch64</td><td class="soon"><span class="chip violet">new</span> — runtime support landed;
+hosted artifacts arrive with the current release train. Until the
+PowerShell installer ships, download the Windows archive from the
+releases with your PAT.</td></tr>
+</table>
+
+<h2>Documentation</h2>
+<ul>
+<li>User guide <span id="docs-version">· theia 0.2.201</span> —
+  <a href="docs/en/">English</a> · <a href="docs/ru/">Русский</a></li>
+<li><a href="reference/">Platform reference</a> — the engineering
+  documentation: architecture, storage, memory, orchestration,
+  evaluation, release pipeline.</li>
+</ul>
+
+<h2>Releases and access</h2>
+<p>Release artifacts live in
+<a href="https://github.com/dokimelabs/theia-releases">dokimelabs/theia-releases</a>,
+a private repository — distribution is the access gate. Downloads (and the
+installer) authenticate with a fine-grained GitHub token that dokimelabs
+issues per customer; ask your dokimelabs contact for a release token if
+you don't have one. The token can download releases and nothing else.</p>
+
+<p class="foot"><a href="https://github.com/dokimelabs/get-theia">source of this installer</a></p>
+
+<script>
+/* OS selector. Progressive enhancement: the markup ships both panels
+   visible with their own labels and the tablist hidden, so with JS off
+   every instruction is still on the page and reachable. This script
+   reveals the tablist, picks the panel matching the visitor's OS, and
+   lets them override it. No libraries — this is static Pages hosting. */
+(function () {
+  var os = document.getElementById('os');
+  var tabs = document.getElementById('ostabs');
+  if (!os || !tabs) return;
+
+  var buttons = Array.prototype.slice.call(tabs.querySelectorAll('.tab'));
+  var panels = Array.prototype.slice.call(os.querySelectorAll('.panel'));
+  if (!buttons.length || !panels.length) return;
+
+  function select(which) {
+    buttons.forEach(function (b) {
+      var on = b.getAttribute('data-os') === which;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(function (p) {
+      p.hidden = p.getAttribute('data-os') !== which;
+    });
+  }
+
+  var uad = navigator.userAgentData;
+  var plat = (uad && uad.platform) || navigator.platform || '';
+  var isWin = /Windows|Win32|Win64|WOW64/i.test(navigator.userAgent || '') ||
+              /^Win/i.test(plat);
+
+  os.className += ' js';
+  tabs.hidden = false;
+  select(isWin ? 'win' : 'unix');
+
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      select(b.getAttribute('data-os'));
+    });
+    b.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      var step = e.key === 'ArrowRight' ? 1 : buttons.length - 1;
+      var next = buttons[(buttons.indexOf(b) + step) % buttons.length];
+      next.focus();
+      select(next.getAttribute('data-os'));
+    });
+  });
+})();
+</script>
+</body>
+</html>
