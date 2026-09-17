@@ -1,0 +1,19 @@
+allowHtml: false
+lang: en
+langs: ['en']
+
+interface:
+  toc-header: false
+
+breaks: false
+linkify: false
+
+search:
+  provider: local
+
+# Brand skin. Tokens mirror distribution/get-theia/index.html — see the
+# header of the stylesheet for the source-of-truth note.
+allowCustomResources: true
+resources:
+  style:
+    - _assets/theia.css
