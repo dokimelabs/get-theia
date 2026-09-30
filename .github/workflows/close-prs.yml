@@ -1,0 +1,18 @@
+# This repository is a generated artifact of dokimelabs/theia-dev — it
+# accepts no collaboration. PRs cannot be disabled on public repos, so
+# they are closed automatically with the pointer.
+name: close-prs
+on:
+  pull_request_target:
+    types: [opened, reopened]
+permissions:
+  pull-requests: write
+jobs:
+  close:
+    runs-on: ubuntu-24.04
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr close ${{ github.event.pull_request.number }} -R ${{ github.repository }} \
+            --comment "This repository is a generated artifact with no history — its content is replicated from dokimelabs/theia-dev (distribution/get-theia/). Please propose changes there."
