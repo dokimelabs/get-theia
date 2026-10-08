@@ -1,0 +1,4 @@
+# The reference pages are published as written (docs/*.md verbatim);
+# YFM021 flags emoji outside the BMP, which the engineering docs use.
+YFM021:
+  level: disabled
