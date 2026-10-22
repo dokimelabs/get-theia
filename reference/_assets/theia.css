@@ -1,0 +1,408 @@
+/* Aletheia · theia — brand skin for the Diplodoc platform reference.
+ *
+ * STYLE OF RECORD is the TAS deck:
+ *   ~/work/scratchpad/tmp/tas-deck/presentation/theia-tas-deck.orig.html
+ * Token names and values are lifted from it verbatim; the component
+ * vocabulary (kicker, chip, card-on-paper, hairline rule, dark command
+ * frame, mono UI accents) follows it.
+ *
+ * SOURCE OF TRUTH for the web copy of those tokens is the <style> block
+ * in distribution/get-theia/index.html (the download landing). The values
+ * are duplicated here because a Diplodoc page cannot import from that
+ * file. Change them on the landing first, then mirror the change here and
+ * in docs/sources/0.2.201/_assets/theia.css — the two stylesheets are
+ * byte-identical below this header.
+ *
+ * Palette: hue is the meaning family, shade is the value. Desaturated and
+ * deepened — no flat saturated primaries, no decorative colour. Every
+ * rule below names the semantic its colour carries.
+ *
+ * HOW THIS WORKS. Diplodoc's content tokens derive from the Gravity UI
+ * base tokens (--yfm-color-link -> --g-color-text-link,
+ * --yfm-color-note-tip -> --g-color-text-positive, and so on), so the
+ * brand is applied by restating those base tokens per theme rather than
+ * by overriding component selectors. Diplodoc stamps the active theme on
+ * <body> as .g-root_theme_light / .g-root_theme_dark; BOTH are defined
+ * below so the theme toggle keeps working in either direction. The
+ * doubled .g-root.g-root_theme_* selector outranks the bundle's
+ * single-class definitions.
+ */
+
+/* ── Typography ───────────────────────────────────────────────────── */
+/* Deck typography: system sans throughout, no serif anywhere; mono for
+   kickers, labels, code and UI accents; headings carry tight negative
+   letter-spacing. Deck body is 19px for projection — docs prose sits at
+   Diplodoc's reading size and only inherits the family and tracking. */
+
+.g-root {
+  --theia-sans: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --theia-mono: "JetBrains Mono", "SF Mono", Consolas, "Cascadia Mono", monospace;
+
+  --yfm-font-family-sans: var(--theia-sans);
+  --yfm-font-family-monospace: var(--theia-mono);
+}
+
+.g-root body,
+.g-root .yfm {
+  font-family: var(--theia-sans);
+  font-kerning: normal;
+}
+
+.yfm h1,
+.dc-doc-page-title,
+.dc-doc-page__title {
+  font-family: var(--theia-sans);
+  font-weight: 750;
+  letter-spacing: -0.028em;
+}
+
+.yfm h2 {
+  font-family: var(--theia-sans);
+  font-weight: 720;
+  letter-spacing: -0.018em;
+}
+
+.yfm h3,
+.yfm h4,
+.yfm h5,
+.yfm h6 {
+  font-family: var(--theia-sans);
+  font-weight: 700;
+  letter-spacing: -0.014em;
+}
+
+/* The wordmark, when a logo is configured: the deck's .brand treatment. */
+.pc-logo__text {
+  font: 650 13px var(--theia-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Mono for the UI accents the deck sets in mono: the contents rail's
+   section labels and the "in this article" heading. */
+.dc-mini-toc__title {
+  font: 600 12.5px/1 var(--theia-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--g-color-text-secondary);
+}
+
+/* ── Light theme — ink on cool paper ──────────────────────────────── */
+
+.g-root.g-root_theme_light {
+  --g-color-text-primary: #1b1f26; /* ink — text and structure */
+  --g-color-text-complementary: #49525f;
+  --g-color-text-secondary: #65707e; /* slate — secondary */
+  --g-color-text-hint: #7e8894;
+
+  --g-color-text-link: #3a5683; /* denim — navigation, mechanisms */
+  --g-color-text-link-hover: #0e6245; /* pine — the hover destination */
+  --g-color-text-link-visited: #4a5f85;
+  --g-color-text-link-visited-hover: #0e6245;
+
+  --g-color-text-info: #3a5683; /* denim — note: info */
+  --g-color-text-positive: #0e6245; /* pine — note: tip, verified */
+  --g-color-text-warning: #5b4b8a; /* violet — note: attention, arriving */
+  --g-color-text-danger: #8c2f39; /* crimson — note: important, failure */
+  /* Diplodoc colours inline code straight from text-misc, so this role
+     stays ink: a token you read is neutral, not an accent. */
+  --g-color-text-misc: #1b1f26;
+
+  --g-color-base-background: #f5f7fb; /* paper — cool blue-gray ground */
+  --g-color-base-generic: #e7ebf4; /* panel — recessed strips, table head */
+  --g-color-base-generic-hover: #dde3ef;
+  --g-color-base-generic-medium: #d5dbe6;
+  --g-color-base-generic-ultralight: #fbfcfe; /* card — raised surface */
+  --g-color-base-selection: #3a56831f;
+  --g-color-base-selection-hover: #3a568330;
+
+  --g-color-base-brand: #3a5683;
+  --g-color-base-brand-hover: #32496f;
+  --g-color-text-brand: #3a5683;
+  --g-color-text-brand-heavy: #2c4165;
+  --g-color-text-brand-contrast: #fbfcfe;
+  --g-color-line-brand: #3a5683;
+
+  --g-color-line-generic: #d5dbe6; /* hairline rules */
+  --g-color-line-generic-hover: #c4ccdb;
+  --g-color-line-generic-accent: #b9c2d4;
+  --g-color-line-generic-solid: #d5dbe6;
+
+  /* Note grounds: the deck's soft pair for each hue. */
+  --g-color-base-info-light: #e5ebf4; /* denim-soft */
+  --g-color-base-positive-light: #e1efe8; /* pine-soft */
+  --g-color-base-warning-light: #e9e6f3; /* violet-soft */
+  --g-color-base-danger-light: #f5e6e8; /* crimson-soft */
+  --g-color-base-misc-light: #fbfcfe; /* inline-code chip ground */
+
+  --yfm-color-inline-code: #1b1f26;
+  --yfm-color-inline-code-background: #fbfcfe;
+
+  --dc-color-mini-toc-active: #1b1f26;
+  --dc-color-mini-toc-active-border: #3a5683;
+  --dc-text-highlight: #5b4b8a2e; /* violet — search highlight */
+}
+
+/* ── Dark theme — the deck's ink, lifted ──────────────────────────── */
+/* Same hue families raised in value so each still reads on an ink ground.
+   Verified against the rendered page, not against the swatch. */
+
+.g-root.g-root_theme_dark {
+  --g-color-text-primary: #e4e9f1;
+  --g-color-text-complementary: #b6bfcd;
+  --g-color-text-secondary: #99a4b3; /* slate lifted */
+  --g-color-text-hint: #838e9d;
+
+  --g-color-text-link: #82a9de; /* denim lifted — the deck's .g-steer */
+  --g-color-text-link-hover: #5cbd8e; /* pine lifted — the deck's .g-ok */
+  --g-color-text-link-visited: #9bb8e5;
+  --g-color-text-link-visited-hover: #5cbd8e;
+
+  --g-color-text-info: #82a9de;
+  --g-color-text-positive: #5cbd8e;
+  --g-color-text-warning: #b1a3e8; /* violet lifted — the deck's .g-mark */
+  --g-color-text-danger: #e08791; /* crimson lifted — the deck's .g-crim */
+  --g-color-text-misc: #e4e9f1; /* see the light block: inline code */
+
+  --g-color-base-background: #171a21; /* the deck's terminal ground */
+  --g-color-base-generic: #222732; /* raised panel */
+  --g-color-base-generic-hover: #2a303d;
+  --g-color-base-generic-medium: #333a49;
+  --g-color-base-generic-ultralight: #1c2028;
+  --g-color-base-selection: #82a9de29;
+  --g-color-base-selection-hover: #82a9de3d;
+
+  --g-color-base-brand: #3a5683;
+  --g-color-base-brand-hover: #466393;
+  --g-color-text-brand: #82a9de;
+  --g-color-text-brand-heavy: #9bb8e5;
+  --g-color-text-brand-contrast: #f1f4f9;
+  --g-color-line-brand: #82a9de;
+
+  --g-color-line-generic: #2c323e;
+  --g-color-line-generic-hover: #39404f;
+  --g-color-line-generic-accent: #454d5e;
+  --g-color-line-generic-solid: #2c323e;
+
+  --g-color-base-info-light: #1b2230;
+  --g-color-base-positive-light: #152620;
+  --g-color-base-warning-light: #221e30;
+  --g-color-base-danger-light: #2a181c;
+  --g-color-base-misc-light: #222732;
+
+  --yfm-color-inline-code: #e4e9f1;
+  --yfm-color-inline-code-background: #222732;
+
+  --dc-color-mini-toc-active: #e4e9f1;
+  --dc-text-highlight: #b1a3e840;
+}
+
+/* ── The command frame ────────────────────────────────────────────── */
+/* The deck renders every command and transcript on one dark frame. Block
+   code here is that frame in BOTH themes — it is the deck's most
+   recognisable component, and holding it constant is what makes the docs
+   and the landing read as one surface. Inline code stays a light chip,
+   because a token you read is not a command you run. */
+
+.g-root .yfm pre,
+.g-root .yfm .hljs,
+.g-root .yfm pre > code {
+  background: #171a21;
+  color: #ccd3dd;
+  border-color: #10131a;
+}
+
+.g-root .yfm pre {
+  border: 1px solid #10131a;
+  border-radius: 12px;
+  box-shadow: 0 1px 1px rgba(28, 38, 58, 0.03), 0 10px 26px -20px rgba(28, 38, 58, 0.3);
+}
+
+/* In dark the page ground IS the deck's frame colour, so an unchanged
+   frame would vanish into it. The semantic being preserved is "a
+   distinct command panel", so on ink the panel lifts instead. */
+.g-root_theme_dark .yfm pre,
+.g-root_theme_dark .yfm .hljs,
+.g-root_theme_dark .yfm pre > code {
+  background: #1e222b;
+}
+
+/* The mono family reaches these two components only by name: Diplodoc's
+   inline-code chip and the code frame both hardcode their own stack
+   rather than reading --yfm-font-family-monospace. */
+.g-root .yfm pre code,
+.g-root .yfm code,
+.g-root .yfm .yfm-clipboard-inline-code {
+  font-family: var(--theia-mono);
+}
+
+/* A token you read, not a command you run: ink on a card chip, in both
+   themes — never an accent colour. */
+.g-root .yfm .yfm-clipboard-inline-code {
+  color: var(--g-color-text-primary);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 6px;
+}
+
+/* Syntax tokens mapped onto the deck's terminal palette: .g-steer denim
+   for keys and mechanisms, .g-ok pine for values, .g-mark violet for
+   literals, .g-crim for deletions, .g-dim for anything subordinate. */
+.g-root .yfm .hljs-attr,
+.g-root .yfm .hljs-built_in,
+.g-root .yfm .hljs-keyword,
+.g-root .yfm .hljs-variable {
+  color: #82a9de;
+}
+
+.g-root .yfm .hljs-string,
+.g-root .yfm .hljs-addition {
+  color: #5cbd8e;
+}
+
+.g-root .yfm .hljs-number,
+.g-root .yfm .hljs-literal {
+  color: #b1a3e8;
+}
+
+.g-root .yfm .hljs-deletion {
+  color: #e08791;
+}
+
+/* The deck's .g-dim (#5d6675) is 3.0:1 on the frame — fine for its
+   decorative prompt glyph, short of AA for a comment somebody has to
+   read. Same neutral, lifted one step to 4.8:1. */
+.g-root .yfm .hljs-comment,
+.g-root .yfm .hljs-punctuation,
+.g-root .yfm .hljs-bullet {
+  color: #7c8797;
+}
+
+.g-root .yfm .hljs-section,
+.g-root .yfm .hljs-title,
+.g-root .yfm .hljs-subst {
+  color: #ccd3dd;
+}
+
+/* The clipboard / wrap controls float over the dark frame, so they take
+   the frame's foreground rather than the page's. */
+.g-root .yfm pre .yfm-clipboard-button,
+.g-root .yfm pre .yfm-wrapping-button,
+.g-root .yfm .yfm-code-floating .g-button {
+  color: #99a4b3;
+}
+
+/* ── Structure: restraint, thin rules, one accent gradient ────────── */
+
+/* The single accent gradient — denim → pine → violet, as a hairline
+   under the masthead. It is the only gradient, and it repeats the one on
+   the download landing. */
+.pc-navigation,
+.pc-desktop-navigation__wrapper {
+  position: relative;
+}
+
+.pc-navigation::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3a5683 0%, #0e6245 52%, #5b4b8a 100%);
+  z-index: 1;
+}
+
+/* Tables are cards on paper: hairline border, panel head, rounded. */
+.g-root .yfm table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--theia-r, 14px);
+  overflow: hidden;
+  box-shadow: 0 1px 1px rgba(28, 38, 58, 0.03), 0 10px 26px -20px rgba(28, 38, 58, 0.3);
+}
+
+.g-root .yfm table th {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--g-color-text-secondary);
+}
+
+/* Notes: the hue family says what kind of note it is, and a left rule
+ * states it at the edge instead of relying on the fill alone.
+ *
+ * Diplodoc bakes the note icon's colour into a data-URI SVG rather than
+ * a token (rgb(2,123,243), rgb(86,189,103), rgb(241,149,24),
+ * rgb(255,70,69) — flat saturated primaries). The glyph below is the
+ * bundle's own, re-filled from the palette; that is the only way to
+ * reach it. Keep the geometry identical if Diplodoc changes it.
+ */
+.g-root .yfm .yfm-note {
+  border-radius: 12px;
+  border-left: 2px solid transparent;
+}
+
+.g-root .yfm .yfm-note.yfm-accent-info {
+  border-left-color: #3a5683; /* denim — informational aside */
+}
+.g-root .yfm .yfm-note.yfm-accent-tip {
+  border-left-color: #0e6245; /* pine — verified practice */
+}
+.g-root .yfm .yfm-note.yfm-accent-warning {
+  border-left-color: #5b4b8a; /* violet — attention, not yet failure */
+}
+.g-root .yfm .yfm-note.yfm-accent-alert {
+  border-left-color: #8c2f39; /* crimson — failure, sparingly */
+}
+
+.g-root .yfm .yfm-note.yfm-accent-info > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%233a5683"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+.g-root .yfm .yfm-note.yfm-accent-tip > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%230e6245"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+.g-root .yfm .yfm-note.yfm-accent-warning > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%235b4b8a"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+.g-root .yfm .yfm-note.yfm-accent-alert > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%238c2f39"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+
+/* On the ink ground the same hues are lifted so the disc still separates
+   from the note panel behind it. */
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-info {
+  border-left-color: #82a9de;
+}
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-tip {
+  border-left-color: #5cbd8e;
+}
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-warning {
+  border-left-color: #b1a3e8;
+}
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-alert {
+  border-left-color: #e08791;
+}
+
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-info > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%235079b8"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-tip > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%23268a63"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-warning > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%237a68b5"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+.g-root_theme_dark .yfm .yfm-note.yfm-accent-alert > :first-child::before {
+  content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="8" fill="%23a34751"/%3E%3Crect width="1" height="5" x="7.5" y="6.5" stroke="%23fff" rx=".5"/%3E%3Ccircle cx="8" cy="4" r="1" fill="%23fff"/%3E%3C/svg%3E');
+}
+
+/* The contents rail: the active entry is denim, not bold-black. */
+.dc-toc-item__text_active {
+  color: var(--g-color-text-link);
+  font-weight: 650;
+}
+
+/* Horizontal rules are hairlines, never bars. */
+.g-root .yfm hr {
+  border: 0;
+  border-top: 1px solid var(--g-color-line-generic);
+}
