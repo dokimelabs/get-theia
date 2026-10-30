@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Get theia</title>
+<meta name="description" content="Install theia, the Aletheia terminal for Claude Code sessions.">
+<style>
+  :root { color-scheme: light dark; --bg: #fafaf9; --fg: #1c1917; --mute: #78716c; --line: #e7e5e4; --box: #f5f5f4; --acc: #c2410c; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0c0a09; --fg: #f5f5f4; --mute: #a8a29e; --line: #292524; --box: #1c1917; --acc: #f0a07a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; background: var(--bg); color: var(--fg); font: 16px/1.5 ui-sans-serif, system-ui, sans-serif; }
+  main { width: 100%; max-width: 640px; }
+  h1 { margin: 0 0 8px; font-size: 40px; font-weight: 600; letter-spacing: .01em; }
+  h1 b { color: var(--acc); font-family: ui-monospace, monospace; margin-right: .3em; }
+  .lede { margin: 0 0 32px; color: var(--mute); }
+  .install { border: 1px solid var(--line); border-radius: 12px; background: var(--box); overflow: hidden; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--mute); }
+  select { font: inherit; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; }
+  .cmd { display: flex; align-items: center; gap: 12px; padding: 16px; }
+  code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; font: 15px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  code::before { content: attr(data-prompt); color: var(--mute); margin-right: .6em; }
+  button { flex: none; font: inherit; font-size: 14px; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  button:hover, select:hover { border-color: var(--acc); }
+  .note { margin: 16px 0 0; font-size: 14px; color: var(--mute); }
+  .foot { margin: 48px 0 0; font-size: 13px; }
+  .foot a { color: var(--mute); }
+</style>
+</head>
+<body>
+<main>
+  <h1><b>&gt;_</b>Aletheia</h1>
+  <p class="lede">Install theia. The installer asks you to sign in with Google, GitHub or Microsoft; access is by invitation.</p>
+  <div class="install">
+    <div class="bar">
+      <label for="platform">Platform</label>
+      <select id="platform">
+        <option value="unix">macOS / Linux</option>
+        <option value="windows">Windows</option>
+      </select>
+    </div>
+    <div class="cmd">
+      <code id="cmd" data-prompt="$">curl -fsSL https://dokimelabs.github.io/get-theia/install.sh | sh</code>
+      <button id="copy" type="button">Copy</button>
+    </div>
+  </div>
+  <p class="note" id="note">Run it in a terminal. It installs to ~/.local/bin and needs no admin rights.</p>
+  <p class="foot"><a href="privacy.html">Privacy</a></p>
+</main>
+<script>
+  const COMMANDS = {
+    unix: { prompt: '$', text: 'curl -fsSL https://dokimelabs.github.io/get-theia/install.sh | sh', note: 'Run it in a terminal. It installs to ~/.local/bin and needs no admin rights.' },
+    windows: { prompt: 'PS>', text: 'irm https://dokimelabs.github.io/get-theia/install.ps1 | iex', note: 'Run it in PowerShell. It installs for your user and needs no admin rights.' },
+  };
+  const select = document.getElementById('platform');
+  const cmd = document.getElementById('cmd');
+  const note = document.getElementById('note');
+  const copy = document.getElementById('copy');
+  function show(p) {
+    const c = COMMANDS[p];
+    cmd.textContent = c.text;
+    cmd.dataset.prompt = c.prompt;
+    note.textContent = c.note;
+    select.value = p;
+  }
+  const ua = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent;
+  show(/win/i.test(ua) ? 'windows' : 'unix');
+  select.addEventListener('change', () => show(select.value));
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(cmd.textContent);
+      copy.textContent = 'Copied';
+    } catch {
+      copy.textContent = 'Select and copy';
+    }
+    setTimeout(() => (copy.textContent = 'Copy'), 1500);
+  });
+</script>
+</body>
+</html>
