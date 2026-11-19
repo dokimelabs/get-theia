@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy — Aletheia</title>
+<meta name="description" content="What the theia installer and its release gate do with your data.">
+<style>
+  :root { color-scheme: light dark; --bg: #fafaf9; --fg: #1c1917; --mute: #78716c; --line: #e7e5e4; --acc: #c2410c; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0c0a09; --fg: #f5f5f4; --mute: #a8a29e; --line: #292524; --acc: #f0a07a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 48px 16px; background: var(--bg); color: var(--fg); font: 16px/1.6 ui-sans-serif, system-ui, sans-serif; }
+  main { max-width: 680px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 32px; font-weight: 600; }
+  h1 b { color: var(--acc); font-family: ui-monospace, monospace; margin-right: .3em; }
+  h2 { margin: 32px 0 8px; font-size: 18px; font-weight: 600; }
+  p, li { color: var(--fg); }
+  .meta, .back { color: var(--mute); font-size: 14px; }
+  a { color: var(--acc); }
+  code { font: 14px ui-monospace, monospace; }
+  ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="back"><a href="./">← Get theia</a></p>
+  <h1><b>&gt;_</b>Privacy</h1>
+  <p class="meta">Aletheia (theia) by dokimelabs · effective 28 October 2026</p>
+
+  <p>This page explains what happens to your data when you install theia from this site. In short: we use the identity you sign in with to check whether you may install theia, we keep a short log of that, and nothing else.</p>
+
+  <h2>What the installer sends</h2>
+  <p>The install command runs on your computer. It sends our release gate (a service at <code>get-theia.dokimelabs.workers.dev</code>) your operating system, your processor architecture and the theia version you asked for, so the gate can pick the right download. It sends nothing else about your machine.</p>
+
+  <h2>Signing in</h2>
+  <p>To download theia you sign in with Google, GitHub or Microsoft. The provider tells the gate who you are:</p>
+  <ul>
+    <li><b>Google</b>: your email address (only if Google has verified it).</li>
+    <li><b>GitHub</b>: your username and your verified email addresses.</li>
+    <li><b>Microsoft</b>: your sign-in name (for work accounts, the address your organization assigned).</li>
+  </ul>
+  <p>The gate compares this identity with the list of people allowed to install theia. That is the only use. We ask the provider for no other information, we never see your password, and the access the provider grants is used once, during sign-in, and then discarded.</p>
+
+  <h2>What is kept, and for how long</h2>
+  <ul>
+    <li><b>Sign-in state</b>: the code shown in your terminal and the result of your sign-in are held for at most 15 minutes, then deleted automatically.</li>
+    <li><b>Logs</b>: the gate records one line for each sign-in decision (allowed, refused, or failed) and one for each download, with the identity and the release file. These logs are kept by our hosting provider, Cloudflare, for a limited period (days, not months) and are used only to operate and secure the service.</li>
+    <li><b>The allowlist</b>: if you have been given access, your identity is on the list of allowed identities until access is withdrawn.</li>
+  </ul>
+
+  <h2>What we do not do</h2>
+  <p>This site and the gate set no cookies and run no analytics or tracking. We do not sell, rent or share your data, and we do not use it to contact you or for advertising.</p>
+
+  <h2>Who else is involved</h2>
+  <ul>
+    <li><b>GitHub Pages</b> hosts this website; GitHub may log visits under its own privacy statement.</li>
+    <li><b>Cloudflare</b> runs the release gate and stores the releases.</li>
+    <li><b>Your sign-in provider</b> (Google, GitHub or Microsoft) handles your sign-in under its own privacy policy.</li>
+  </ul>
+
+  <h2>Your choices</h2>
+  <p>You can withdraw the access you granted at any time in your provider account: Google (<i>Google Account → Security → Your connections to third-party apps</i>), GitHub (<i>Settings → Applications → Authorized OAuth Apps</i>) or Microsoft (<i>account.microsoft.com → Privacy → Apps and services</i>, or your organization's My Apps). To have your identity removed from the allowlist, or for any question about this policy, contact dokimelabs through <a href="https://github.com/dokimelabs">github.com/dokimelabs</a>.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, the new version is published on this page with a new effective date.</p>
+</main>
+</body>
+</html>
